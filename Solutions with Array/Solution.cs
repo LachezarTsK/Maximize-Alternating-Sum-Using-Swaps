@@ -14,16 +14,16 @@ public class Solution
         UnionFind unionFind = new UnionFind(input.Length);
         foreach (int[] swap in swaps)
         {
-            unionFind.joinByRank(swap[0], swap[1]);
+            unionFind.JoinByRank(swap[0], swap[1]);
         }
 
         ConnectedComponents[] parentToConnectedComponents
-                 = createMapParentToConnectedComponents(input, unionFind);
+                 = CreateMapParentToConnectedComponents(input, unionFind);
 
-        return calculateMaxAlternatingSum(parentToConnectedComponents);
+        return CalculateMaxAlternatingSum(parentToConnectedComponents);
     }
 
-    private ConnectedComponents[] createMapParentToConnectedComponents(int[] input, UnionFind unionFind)
+    private ConnectedComponents[] CreateMapParentToConnectedComponents(int[] input, UnionFind unionFind)
     {
         var parentToConnectedComponents = new ConnectedComponents[input.Length];
         for (int i = 0; i < input.Length; ++i)
@@ -33,9 +33,8 @@ public class Solution
 
         for (int i = 0; i < input.Length; ++i)
         {
-            int parent = unionFind.findParent(i);
-            // parentToConnectedComponents.TryAdd(parent, new ConnectedComponents());
-            if (isEven(i))
+            int parent = unionFind.FindParent(i);
+            if (IsEven(i))
             {
                 ++parentToConnectedComponents[parent].numberOfEvenIndexes;
             }
@@ -45,7 +44,7 @@ public class Solution
         return parentToConnectedComponents;
     }
 
-    private long calculateMaxAlternatingSum(ConnectedComponents[] parentToConnectedComponents)
+    private long CalculateMaxAlternatingSum(ConnectedComponents[] parentToConnectedComponents)
     {
         long maxAlternatingSum = 0;
         foreach (var current in parentToConnectedComponents)
@@ -63,7 +62,7 @@ public class Solution
         return maxAlternatingSum;
     }
 
-    private bool isEven(int value)
+    private bool IsEven(int value)
     {
         return value % 2 == 0;
     }
@@ -71,8 +70,8 @@ public class Solution
 
 class UnionFind
 {
-    int[] parent;
-    int[] rank;
+    readonly int[] parent;
+    readonly int[] rank;
 
     public UnionFind(int numberOfElements)
     {
@@ -85,19 +84,19 @@ class UnionFind
         }
     }
 
-    public int findParent(int index)
+    public int FindParent(int index)
     {
         if (parent[index] != index)
         {
-            parent[index] = findParent(parent[index]);
+            parent[index] = FindParent(parent[index]);
         }
         return parent[index];
     }
 
-    public void joinByRank(int indexOne, int indexTwo)
+    public void JoinByRank(int indexOne, int indexTwo)
     {
-        int first = findParent(indexOne);
-        int second = findParent(indexTwo);
+        int first = FindParent(indexOne);
+        int second = FindParent(indexTwo);
         if (first == second)
         {
             return;
