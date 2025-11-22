@@ -60,7 +60,6 @@ class UnionFind {
     parent: number[];
     rank: number[];
 
-
     constructor(numberOfElements: number) {
         this.parent = new Array(numberOfElements);
         this.rank = new Array(numberOfElements);
