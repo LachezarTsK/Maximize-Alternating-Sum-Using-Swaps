@@ -6,7 +6,7 @@ function maxAlternatingSum(input: number[], swaps: number[][]): number {
         unionFind.joinByRank(swap[0], swap[1]);
     }
 
-    const parentToConnectedComponents
+    const parentToConnectedComponents: Map<number, ConnectedComponents>
         = createMapParentToConnectedComponents(input, unionFind);
 
     return calculateMaxAlternatingSum(parentToConnectedComponents);
